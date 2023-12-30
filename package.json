@@ -1,0 +1,22 @@
+{
+  "name": "vorpalblockly",
+  "version": "1.0.0",
+  "description": "Blockly for Vorpal The Hexapod",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/reddox/VorpalBlockly.git"
+  },
+  "author": "Philipp Wendt",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/reddox/VorpalBlockly/issues"
+  },
+  "homepage": "https://github.com/reddox/VorpalBlockly#readme",
+  "dependencies": {
+    "blockly": "^10.3.0"
+  }
+}

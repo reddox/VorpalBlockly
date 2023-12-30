@@ -1,0 +1,3 @@
+[submodule "scripts/JS-Interpreter"]
+	path = scripts/JS-Interpreter
+	url = https://github.com/NeilFraser/JS-Interpreter.git
