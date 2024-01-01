@@ -228,6 +228,7 @@ toolbox = {
         {
             "kind": "category",
             "name": "Robot",
+            "colour": 30,
             "contents": [
                 {
                     "kind": "block",
@@ -254,6 +255,16 @@ toolbox = {
                 {
                     "kind": "block",
                     "type": "wait"
+                },
+
+                {
+                    "kind": "block",
+                    "type": "walk"
+                },
+
+                {
+                    "kind": "block",
+                    "type": "stop"
                 },
             ]
         },
