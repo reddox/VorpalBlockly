@@ -2,10 +2,35 @@ const workspace = Blockly.inject('blocklyDiv', {
   toolbox: toolbox,
 });
 
+try {
+  wsJson = JSON.parse(Android.loadWorkspace())
+  Blockly.serialization.workspaces.load(wsJson, workspace);
+} catch (e) {
+  //do nothing
+}
+
+// https://developers.google.com/blockly/guides/create-custom-blocks/code-generation/overview#realtime_generation
+const supportedEvents = new Set([
+  Blockly.Events.BLOCK_CHANGE,
+  Blockly.Events.BLOCK_CREATE,
+  Blockly.Events.BLOCK_DELETE,
+  Blockly.Events.BLOCK_MOVE,
+]);
+workspace.addChangeListener(saveWorkspace);
+function saveWorkspace(event) {
+  if (workspace.isDragging()) return;
+  if (!supportedEvents.has(event.type)) return;
+  const state = Blockly.serialization.workspaces.save(workspace);
+  Android.saveWorkspace(JSON.stringify(state));
+}
+
+
 Blockly.JavaScript.STATEMENT_SUFFIX = 'highlightBlock(%1);\n';
 Blockly.JavaScript.addReservedWords('highlightBlock');
 Blockly.JavaScript.addReservedWords('robotBeep');
 Blockly.JavaScript.addReservedWords('sleep');
+Blockly.JavaScript.addReservedWords('setMode');
+Blockly.JavaScript.addReservedWords('setDpad');
 
 function initApi(interpreter, globalObject) {
   // Add an API function for highlighting blocks.
@@ -29,6 +54,18 @@ function initApi(interpreter, globalObject) {
     sleepduration = millis;
   };
   interpreter.setProperty(globalObject, 'sleep',
+    interpreter.createNativeFunction(wrapper));
+
+  var wrapper = function (mode) {
+    Android.setMode(mode);
+  };
+  interpreter.setProperty(globalObject, 'setMode',
+    interpreter.createNativeFunction(wrapper));
+
+  var wrapper = function (dpad) {
+    Android.setDpad(dpad);
+  };
+  interpreter.setProperty(globalObject, 'setDpad',
     interpreter.createNativeFunction(wrapper));
 }
 
